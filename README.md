@@ -2,19 +2,32 @@
 
 A phone-friendly CLI for searching, tagging, and resuming [Claude Code](https://claude.ai/code) sessions from your terminal.
 
-## Why
+## Why — doesn't `claude --resume` already exist?
 
-Claude Code doesn't have built-in session management. If you run dozens of sessions a day, finding and resuming the right one means scrolling through `claude --resume` output. `cs` fixes that with search, tagging, and a quick-pick menu.
+Yes. Claude Code has a built-in interactive session picker (`claude --resume`) with arrow-key navigation, search, and filtering by directory or git branch. It's solid for casual use.
+
+`cs` fills the gaps that the built-in picker doesn't cover:
+
+| Feature | `claude --resume` | `cs` |
+|---|---|---|
+| List sessions | Interactive TUI (arrow keys) | Numbered list — type `3` and go |
+| Search | By session name only | Full-text across message content |
+| Tagging | Single name per session | Multiple tags per session |
+| Bookmarks | No | Filter by tag across all projects |
+| Phone/SSH friendly | Requires arrow-key TUI | One-shot commands (`cs r 5`) |
+| Cross-project | Toggle with `A` key | All projects by default |
+
+If you run dozens of sessions a day and want fast, scriptable access — especially from a phone or over SSH — `cs` is for you.
 
 ## Install
 
 ```bash
 # Copy the script to your PATH
-curl -fsSL https://raw.githubusercontent.com/devdarren/cs-claude-sessions/main/cs -o ~/.local/bin/cs
+curl -fsSL https://raw.githubusercontent.com/devdarren7/cs-claude-sessions/main/cs -o ~/.local/bin/cs
 chmod +x ~/.local/bin/cs
 
 # Or clone and symlink
-git clone https://github.com/devdarren/cs-claude-sessions.git
+git clone https://github.com/devdarren7/cs-claude-sessions.git
 ln -s "$(pwd)/cs-claude-sessions/cs" ~/.local/bin/cs
 ```
 
