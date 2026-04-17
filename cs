@@ -47,10 +47,13 @@ except:
 # Parse sessions from history
 sessions = {}
 for line in open("$HISTORY"):
-    line = line.strip()
+    line = line.strip().lstrip("\x00")
     if not line:
         continue
-    d = json.loads(line)
+    try:
+        d = json.loads(line)
+    except json.JSONDecodeError:
+        continue
     sid = d.get("sessionId", "")
     ts = d.get("timestamp", 0)
     msg = d.get("display", "")
@@ -193,7 +196,13 @@ for item in cache:
 import json
 sessions = {}
 for line in open('$HISTORY'):
-    d = json.loads(line.strip())
+    line = line.strip().lstrip('\x00')
+    if not line:
+        continue
+    try:
+        d = json.loads(line)
+    except json.JSONDecodeError:
+        continue
     sid = d.get('sessionId','')
     ts = d.get('timestamp',0)
     if sid not in sessions or ts > sessions[sid]:
